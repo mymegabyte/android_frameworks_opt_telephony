@@ -655,7 +655,7 @@ public class SIMRecords extends IccRecords {
                 log("IMSI: mMncLength=" + mMncLength);
                 log("IMSI: " + mImsi.substring(0, 6) + "xxxxxxx");
 
-                if (((mMncLength == UNKNOWN) || (mMncLength == 2)) &&
+                if (((mMncLength == UNINITIALIZED)  || (mMncLength == UNKNOWN) || (mMncLength == 2)) &&
                         ((mImsi != null) && (mImsi.length() >= 6))) {
                     String mccmncCode = mImsi.substring(0, 6);
                     for (String mccmnc : MCCMNC_CODES_HAVING_3DIGITS_MNC) {
@@ -667,7 +667,7 @@ public class SIMRecords extends IccRecords {
                     }
                 }
 
-                if (mMncLength == UNKNOWN) {
+                if (mMncLength == UNKNOWN || mMncLength == UNINITIALIZED) {
                     // the SIM has told us all it knows, but it didn't know the mnc length.
                     // guess using the mcc
                     try {
@@ -927,7 +927,7 @@ public class SIMRecords extends IccRecords {
                             log("MNC length not present in EF_AD setting9 mMncLength=" + mMncLength);
                         }
                     }
-                    if (mImsi != null && mMncLength != UNKNOWN) {
+                    if (mImsi != null && (mMncLength != UNKNOWN && mMncLength != UNINITIALIZED)) {
                         // finally have both imsi and the length of the mnc and can parse
                         // the imsi properly
                         log("update mccmnc=" + mImsi.substring(0, 3 + mMncLength));
