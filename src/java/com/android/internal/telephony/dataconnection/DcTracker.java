@@ -3033,6 +3033,9 @@ public final class DcTracker extends DcTrackerBase {
     }
 
     private String apnListToString (ArrayList<ApnSetting> apns) {
+	if (apns == null) {
+		return "";
+	}
         StringBuilder result = new StringBuilder();
         for (int i = 0, size = apns.size(); i < size; i++) {
             result.append('[')
