@@ -1279,8 +1279,13 @@ public final class DcTracker extends DcTrackerBase {
             }
 
             if (DBG) {
-                log("trySetupData: call setupData, waitingApns : "
-                        + apnListToString(apnContext.getWaitingApns()));
+                if (apnContext.getWaitingApns() == null) {
+                    log("trySetupData: call setupData, waitingApns : null");
+                }
+                else {
+                    log("trySetupData: call setupData, waitingApns : "
+                            + apnListToString(apnContext.getWaitingApns()));
+                }
             }
 
             retValue = setupData(apnContext, radioTech);
@@ -3114,9 +3119,6 @@ public final class DcTracker extends DcTrackerBase {
     }
 
     private String apnListToString (ArrayList<ApnSetting> apns) {
-	if (apns == null) {
-		return "";
-	}
         StringBuilder result = new StringBuilder();
         for (int i = 0, size = apns.size(); i < size; i++) {
             result.append('[')
